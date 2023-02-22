@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Weapon : MonoBehaviour
 {
@@ -15,8 +16,43 @@ public class Weapon : MonoBehaviour
     [Header("VFX")]
     public GameObject HitVFX;
 
+    [Header("Ammo")]
+    public int mag = 5;
+    public int ammo = 30;
+    public int magAmmo = 30;
 
-    // Update is called once per frame
+    [Header("Ammo UI")]
+    public TextMeshProUGUI MagText;
+    public TextMeshProUGUI AmmoText;
+
+    [Header("Animation")]
+    public Animation ReloadAnimation;
+    public AnimationClip ReloadClip;
+
+    [Header("Recoil")]
+    [Range(0, 1)]
+    public float Recoilpercent = 0.3f;
+    [Range(0, 2)]
+    public float Recoverpercent = 0.7f;
+    [Space]
+    public float RecoilUp = 1f;
+    public float RecoilBack = 0f;
+
+    private Vector3 originalposition;
+    private Vector3 recoilVelocity = Vector3.zero;
+    
+
+
+
+    private void Start()
+    {
+       
+        MagText.text = mag.ToString();
+        AmmoText.text = ammo + "/" + magAmmo;
+
+        originalposition = transform.position;
+
+    }
     void Update()
     {
         if (nextfire > 0)
@@ -24,12 +60,20 @@ public class Weapon : MonoBehaviour
             nextfire-= Time.deltaTime;
         }
 
-        if (Input.GetButton("Fire1")&&nextfire<=0)
+        if (Input.GetButton("Fire1")&&nextfire<=0&&ammo>0&&ReloadAnimation.isPlaying == false)
         {
             nextfire= 1/fireRate;
+            ammo--;
+
+            MagText.text = mag.ToString();
+            AmmoText.text = ammo + "/" + magAmmo;
 
             Fire();
+        }
 
+        if (Input.GetKeyDown(KeyCode.R)&&mag>0)
+        {
+            StartCoroutine(Reload());
         }
     }
 
@@ -47,5 +91,20 @@ public class Weapon : MonoBehaviour
             }
         }
         
+    }
+
+    IEnumerator Reload()
+    {
+        if (mag > 0 && ammo == 0) ReloadAnimation.Play(ReloadClip.name);
+        yield return new WaitForSeconds(3f);
+       
+        if (mag > 0&&ammo==0)
+        {
+            
+            mag--;
+            ammo = magAmmo;
+        }
+        MagText.text = mag.ToString();
+        AmmoText.text = ammo+"/"+magAmmo;
     }
 }
