@@ -30,8 +30,8 @@ public class Weapon : MonoBehaviour
     public AnimationClip ReloadClip;
 
     [Header("Recoil")]
-    [Range(0, 1)]
-    public float Recoilpercent = 0.3f;
+    //[Range(0, 1)]
+    //public float Recoilpercent = 0.3f;
     [Range(0, 2)]
     public float Recoverpercent = 0.7f;
     [Space]
@@ -40,6 +40,12 @@ public class Weapon : MonoBehaviour
 
     private Vector3 originalposition;
     private Vector3 recoilVelocity = Vector3.zero;
+
+    private float recoilLength;
+    private float recoverLength;
+
+    private bool recoiling;
+    private bool recovering;
     
 
 
@@ -50,7 +56,10 @@ public class Weapon : MonoBehaviour
         MagText.text = mag.ToString();
         AmmoText.text = ammo + "/" + magAmmo;
 
-        originalposition = transform.position;
+        originalposition = transform.localPosition;
+
+        recoilLength =0;
+        recoverLength=1/ fireRate * Recoverpercent;
 
     }
     void Update()
@@ -75,10 +84,24 @@ public class Weapon : MonoBehaviour
         {
             StartCoroutine(Reload());
         }
+
+        if (recoiling)
+        {
+            Recoil();
+        }
+
+        if (recovering)
+        {
+            Recovering();
+        }
     }
 
     private void Fire()
     {
+
+         recoiling= true;
+        recovering= false;
+
         Ray ray = new Ray(cameras.transform.position, cameras.transform.forward);
 
         RaycastHit hit;
@@ -106,5 +129,32 @@ public class Weapon : MonoBehaviour
         }
         MagText.text = mag.ToString();
         AmmoText.text = ammo+"/"+magAmmo;
+    }
+
+
+    void Recoil()
+    {
+        Vector3 finalPosition = new Vector3(originalposition.x, originalposition.y+RecoilUp, originalposition.z-RecoilBack);
+
+        transform.localPosition = Vector3.SmoothDamp(transform.localPosition, finalPosition,ref recoilVelocity, recoilLength);
+
+        if (transform.localPosition == finalPosition)
+        {
+            recoiling= false;
+            recovering= true;
+        }
+    }
+
+    void Recovering()
+    {
+        Vector3 finalPosition = originalposition;
+
+        transform.localPosition = Vector3.SmoothDamp(transform.localPosition, finalPosition, ref recoilVelocity, recoverLength);
+
+        if (transform.localPosition == finalPosition)
+        {
+            recoiling = false;
+            recovering = false;
+        }
     }
 }
