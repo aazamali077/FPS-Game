@@ -80,7 +80,7 @@ public class Weapon : MonoBehaviour
             Fire();
         }
 
-        if (Input.GetKeyDown(KeyCode.R)&&mag>0)
+        if (Input.GetKeyDown(KeyCode.R)&&mag>0&&ammo==0)
         {
             StartCoroutine(Reload());
         }
@@ -99,7 +99,7 @@ public class Weapon : MonoBehaviour
     private void Fire()
     {
 
-         recoiling= true;
+        recoiling= true;
         recovering= false;
 
         Ray ray = new Ray(cameras.transform.position, cameras.transform.forward);

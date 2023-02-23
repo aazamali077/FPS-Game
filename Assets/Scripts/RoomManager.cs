@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
+using Photon.Realtime;
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
@@ -11,12 +13,24 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public Transform[] spawnpoints;
 
     public GameObject RoomCam;
+    
 
     [Space]
     public GameObject nameUI;
     public GameObject connectingUI;
+    public GameObject TeamJoinUI;
+    public GameObject WaitingUI;
 
+
+
+    [Space]
+    public Button RedTeambtn, GreenTeambtn;
     private string nickname = "No Name";
+
+   
+    private bool isred;
+    private bool isgreen;
+    private bool isbothplayerconnected;
 
     private void Awake()
     {
@@ -30,18 +44,45 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public void JoinRoomButtonPressed()
     {
-        Debug.Log("Connecting...");
+      
         PhotonNetwork.ConnectUsingSettings();
 
         nameUI.SetActive(false);
-        connectingUI.SetActive(true);
+        WaitingUI.SetActive(true);
     }
 
     void Start()
     {
-        
+        isgreen= false;
+        isred= false;
+        isbothplayerconnected = false;
+
+
+        RedTeambtn.onClick.AddListener(() =>
+        {
+            isred= true;
+            TeamJoinUI.SetActive(false);
+            nameUI.SetActive(true);
+        });
+        GreenTeambtn.onClick.AddListener(() =>
+        {
+            isgreen = true;
+            TeamJoinUI.SetActive(false);
+            nameUI.SetActive(true);
+        });
      
     }
+
+    private void Update()
+    {
+        if (isbothplayerconnected)
+        {
+            RoomCam.SetActive(false);
+            RespawnPlayer();
+            isbothplayerconnected = false;
+        }
+    }
+
 
     public override void OnConnectedToMaster()
     {
@@ -59,20 +100,61 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
         Debug.Log("We are in a room now");
         
+        
     }
 
     public override void OnJoinedRoom()
     {
-        RoomCam.SetActive(false);
+        
 
-        RespawnPlayer();
+        if (PhotonNetwork.PlayerList.Length==2)
+        {
+            isbothplayerconnected=true;
+            WaitingUI.SetActive(false);
+            connectingUI.SetActive(true);
+            RoomCam.SetActive(false);
+            //RespawnPlayer();
+        }
+        else 
+        {
+            isbothplayerconnected=false;
+            connectingUI.SetActive(false);
+            WaitingUI.SetActive(true);
+        }
+        
         base.OnJoinedRoom();
         
     }
 
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        if (PhotonNetwork.PlayerList.Length == 2)
+        {
+            isbothplayerconnected = true;
+           
+            
+            
+        }
+    }
+
+
+
+
+
+
+
     public void RespawnPlayer()
     {
-        Transform spawnpoint = spawnpoints[Random.Range(0, spawnpoints.Length)];
+        Transform spawnpoint =transform;
+        if (isred)
+        {
+            spawnpoint = spawnpoints[0];
+        }
+        else if(isgreen)
+        {
+            spawnpoint = spawnpoints[1];
+        }
         GameObject _player = PhotonNetwork.Instantiate(player.name, spawnpoint.position, Quaternion.identity);
         _player.GetComponent<PlayerSetup>().IsLocalPlayer();
         _player.GetComponent<Health>().islocalplayer = true;
