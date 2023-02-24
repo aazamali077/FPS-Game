@@ -132,16 +132,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.PlayerList.Length == 2)
         {
             isbothplayerconnected = true;
-           
-            
-            
         }
     }
-
-
-
-
-
 
 
     public void RespawnPlayer()

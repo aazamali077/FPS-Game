@@ -7,7 +7,8 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class PlayerSetup : MonoBehaviour
 {
-    //public PlayerMovement movement;
+    public PlayerMovement movement;
+    //public FirstPersonController controller;
 
     public GameObject cameras;
 
@@ -15,8 +16,8 @@ public class PlayerSetup : MonoBehaviour
 
     public void IsLocalPlayer()
     {
-        //movement.enabled= true;
-        GetComponent<FirstPersonController>().enabled = true;
+        movement.enabled= true;
+        //controller.enabled= true;
         cameras.SetActive(true);
     }
 
