@@ -242,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b7824c8f7527fd4d8ed407daadc94d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 379974328759211040, guid: 2523c57e44187fd439b2cb7cbe0861e0, type: 3}
+  player: {fileID: 5349364350424051219, guid: 2af3d9f1c297ab048b20d40563d4ab39, type: 3}
   spawnpoints:
   - {fileID: 818357057}
   - {fileID: 176774894}
@@ -3396,14 +3396,14 @@ Transform:
   - {fileID: 253801478}
   - {fileID: 1766826350}
   - {fileID: 939860036}
-  - {fileID: 2137696508}
-  - {fileID: 1623647009}
   - {fileID: 517234280}
+  - {fileID: 2137696508}
   - {fileID: 548484684}
   - {fileID: 574872850}
   - {fileID: 264125024}
   - {fileID: 539217694}
   - {fileID: 1170794270}
+  - {fileID: 1623647009}
   - {fileID: 186965664}
   - {fileID: 1483664262}
   - {fileID: 356390424}

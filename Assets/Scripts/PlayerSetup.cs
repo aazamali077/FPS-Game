@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using TMPro;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class PlayerSetup : MonoBehaviour
 {
-    public PlayerMovement movement;
+    //public PlayerMovement movement;
 
     public GameObject cameras;
 
@@ -14,7 +15,8 @@ public class PlayerSetup : MonoBehaviour
 
     public void IsLocalPlayer()
     {
-        movement.enabled= true;
+        //movement.enabled= true;
+        GetComponent<FirstPersonController>().enabled = true;
         cameras.SetActive(true);
     }
 
