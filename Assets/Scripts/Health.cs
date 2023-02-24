@@ -6,6 +6,7 @@ using Photon.Pun;
 public class Health : MonoBehaviour
 {
     public int health;
+
     public bool islocalplayer;
     public TMPro.TextMeshProUGUI HealthText;
 
@@ -18,10 +19,10 @@ public class Health : MonoBehaviour
         {
             if(islocalplayer)
             RoomManager.instance.RespawnPlayer();
-
-
             Destroy(gameObject);
         }
     }
+
+  
 
 }
