@@ -29,9 +29,11 @@ public class Weapon : MonoBehaviour
     public Animation ReloadAnimation;
     public AnimationClip ReloadClip;
 
+    [Header("Sounds")]
+    public AudioSource ReloadSound;
+    public AudioSource FireSound;
+
     [Header("Recoil")]
-    //[Range(0, 1)]
-    //public float Recoilpercent = 0.3f;
     [Range(0, 2)]
     public float Recoverpercent = 0.7f;
     [Space]
@@ -52,7 +54,6 @@ public class Weapon : MonoBehaviour
 
     private void Start()
     {
-       
         MagText.text = mag.ToString();
         AmmoText.text = ammo + "/" + magAmmo;
 
@@ -71,7 +72,10 @@ public class Weapon : MonoBehaviour
 
         if (Input.GetButton("Fire1")&&nextfire<=0&&ammo>0&&ReloadAnimation.isPlaying == false)
         {
-            nextfire= 1/fireRate;
+            FireSound.Play();
+
+
+            nextfire = 1/fireRate;
             ammo--;
 
             MagText.text = mag.ToString();
@@ -82,6 +86,8 @@ public class Weapon : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R)&&mag>0&&ammo==0)
         {
+            ReloadSound.Play();
+            
             StartCoroutine(Reload());
         }
 

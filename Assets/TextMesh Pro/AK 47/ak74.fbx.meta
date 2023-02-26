@@ -2,7 +2,43 @@ fileFormatVersion: 2
 guid: 2baa58fbfe8314546a8a0d76c12f36cb
 ModelImporter:
   serializedVersion: 21300
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: 5047006566063024457
+    second: metarig|end
+  - first:
+      74: 5868396449422964286
+    second: metarig|Fire
+  - first:
+      74: 2611075726810385300
+    second: metarig|idle
+  - first:
+      74: -8413879291437822456
+    second: metarig|Reload
+  - first:
+      74: 2800660803430442180
+    second: metarig|Reload_empty
+  - first:
+      74: -5194952940895725577
+    second: metarig|Reload_empty2
+  - first:
+      74: -5297019649661602221
+    second: metarig|run
+  - first:
+      74: 6252017436370504684
+    second: metarig|run2
+  - first:
+      74: -5665587321709468929
+    second: metarig|run2_end
+  - first:
+      74: -8291243016941391717
+    second: metarig|run2_start
+  - first:
+      74: 2510338032988057289
+    second: metarig|start
+  - first:
+      74: -7408968806781539716
+    second: metarig|walk
   externalObjects:
   - first:
       type: UnityEngine:Material
