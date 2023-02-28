@@ -23,6 +23,17 @@ public class Health : MonoBehaviour
         }
     }
 
+    public void AddHealth(int medikit)
+    {
+        health+= medikit;
+        HealthText.text = health.ToString();
+        if (health>=100)
+        {
+            health = 100;
+            HealthText.text = health.ToString();
+        }
+    }
+
   
 
 }
