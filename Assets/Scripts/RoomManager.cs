@@ -27,6 +27,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public Button RedTeambtn, GreenTeambtn;
     private string nickname = "No Name";
 
+
+
    
     private bool isred;
     private bool isgreen;
@@ -152,7 +154,16 @@ public class RoomManager : MonoBehaviourPunCallbacks
         _player.GetComponent<Health>().islocalplayer = true;
 
         _player.GetComponent<PhotonView>().RPC("SetNickName", RpcTarget.AllBuffered, nickname);
+
+        if(isred)
+        _player.GetComponent<PhotonView>().RPC("ChangeRedColor", RpcTarget.AllBuffered);
+        else if(isgreen)
+            _player.GetComponent<PhotonView>().RPC("ChangeGreenColor", RpcTarget.AllBuffered);
+
     }
+
+
+ 
 
 
 }

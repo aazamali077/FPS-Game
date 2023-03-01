@@ -41,6 +41,12 @@ MonoBehaviour:
   - RespawnSpaceship
   - TakeDamage
   - SetNickName
+  - changeColor
+  - ChangeColor
+  - changegreenColor
+  - changeredColor
+  - ChangeGreenColor
+  - ChangeRedColor
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
